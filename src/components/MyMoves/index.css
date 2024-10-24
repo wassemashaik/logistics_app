@@ -1,0 +1,8 @@
+.my-move-main-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 70%;
+  margin: 10px;
+  padding: 10px;
+  background-color: aliceblue;
+}

@@ -1,70 +1,82 @@
-# Getting Started with Create React App
+# Title
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+   Interactive Logistics Application
 
-## Available Scripts
+## Objective
 
-In the project directory, you can run:
+    The application should allow users to browse, view details, add books to a shopping cart, and place an order.
 
-### `npm start`
+## Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+    Frontend - React Js(React Router, Redux/React Context), Backend
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Completion Instructions
 
-### `npm test`
+### Functionality
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Must Have
+# Page: Home
+    - Side Header - links for pages My Moves, My Profile, Get quote, logut
+    - Banner - Heading
+# Page: Logistics List
+    - Header - From address -> To address, Request
+    - List items details
+    - "View moe details" Button in details
+    - "Quotes Awaiting" Button in Book Details Page
+# Button: Logistic Details
+    - Page Details:
+      -  detailed Info:
+         (house details ("Edit House Details" Button), Additional info ("Edit Additional Info" Button), Inventory details ("Edit Inventory" Button))
+        - Inventory Details:
+            - furniture details dropdown, 
+            - Electronics details dropdown,
+            - Vehicle details dropdown, 
+            - Boxes/Trolley details dropdown, 
+            - Custom Items details dropdown
 
-### `npm run build`
+#### Nice to Have
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Guidelines to develop a project
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### Must Have
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    List the necessary guidelines to follow while developing the project, mentioned in the Assignment, if any
 
-### `npm run eject`
+#### Nice to Have
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+    List the additional/suggested guidelines to follow while developing the project, mentioned in the Assignment, if any
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Submission Instructions
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+#### Must Have
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+-   Create a new public repository on GitHub for the assignment.
+-   Commit your code regularly and include clear commit messages.
+-   Ensure the repository is well-organized and easy to navigate
 
-## Learn More
+### Evaluation Criteria:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Functionality:
+    Does the application meet all the specified requirements
+## Code Quality:
+    Is the code clean, modular, and well-structured
+# User Interface:
+    Is the application visually appealing and user-friendly
+# Error Handling:
+    Does the application handle errors gracefully
+# Nice to have tasks:
+    If bonus tasks are attempted, evaluate their implementation.
+## Resources
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Design files
 
-### Code Splitting
+    
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### APIs
+ https://apis2.ccbp.in/packers-and-movers/packers-and-movers-details
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Third-party packages
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+-   react-bootstrap
+-   react-icons
