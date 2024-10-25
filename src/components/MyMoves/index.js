@@ -1,11 +1,27 @@
-import { Component, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import Spinner from 'react-bootstrap/Spinner';
 import "./index.css";
+import MovesCard from "../MovesCard";
+
+const apiStatusConstants = {
+  initial: 'INITIAL',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+  inProgress: 'IN_PROGRESS',
+}
 
 const MyMoves = () => {
   const [logisticData, setLogisticData] = useState([]);
   const [inventoryData, setInventoryData] = useState([]);
-
+  const [vehicleList, setVehicleList] = useState([])
+  const [furnitureList, setFurnitureList] = useState([])
+  const [boxesList, setBoxesList] = useState([])
+  const [electronicsList, setElectronicsList] = useState([])
+  const [othersList, setOthersList] = useState([])
+  const [apiStatus, setApiStatus] = useState(apiStatusConstants.initial)
+  
   const getMovesData = async () => {
+    setApiStatus(apiStatusConstants.inProgress)
     const apiUrl =
       "https://apis2.ccbp.in/packers-and-movers/packers-and-movers-details";
     const options = {
@@ -14,19 +30,13 @@ const MyMoves = () => {
     const response = await fetch(apiUrl, options);
     const data = await response.json();
     if (response.ok === true) {
+      setApiStatus(apiStatusConstants.success)
       console.log(data);
       const updatedGeneralData = data.Customer_Estimate_Flow.map(
         (customer) => ({
-          callBack: customer.call_back,
           customStatus: customer.custom_status,
-          dateCreated: customer.date_created,
-          dateOfCancel: customer.date_of_cancel,
-          dateOfComplete: customer.date_of_complete,
           distance: customer.distance,
-          estimateAmount: customer.estimateAmount,
-          estimateComparison: customer.estimate_comparison,
           estimateId: customer.estimate_id,
-          estimateStatus: customer.estimate_status,
           moveDateFlexible: customer.move_date_flexible,
           movingFrom: customer.moving_from,
           movingOn: customer.moving_on,
@@ -40,57 +50,13 @@ const MyMoves = () => {
           oldHouseAdditionalInfo: customer.old_house_additional_info,
           oldParkingDistance: customer.old_parking_distance,
           orderDate: customer.order_date,
-          orderReviewed: customer.order_reviewed,
-          packingService: customer.packing_service,
           propertySize: customer.property_size,
-          serviceType: customer.service_type,
-          status: customer.status,
-          storageItems: customer.storage_items,
           totalItems: customer.total_items,
-          unpackingService: customer.unpacking_service,
           userId: customer.user_id,
         })
       );
-      console.log("Updated General Data: ", updatedGeneralData);
-
-      const fromAddressDetails = data.Customer_Estimate_Flow.map(
-        (customer) => ({
-          firstName: customer.from_address.firstName,
-          fromAddress: customer.from_address.fromAddress,
-          fromCity: customer.from_address.fromCity,
-          fromLocality: customer.from_address.fromLocality,
-          fromState: customer.from_address.fromState,
-          lastName: customer.from_address.lastName,
-          pincode: customer.from_address.pincode,
-        })
-      );
-      console.log("from Address:", fromAddressDetails);
-
-      const toAddressDetails = data.Customer_Estimate_Flow.map((customer) => ({
-        firstName: customer.to_address.firstName,
-        toAddress: customer.to_address.toAddress,
-        toCity: customer.to_address.toCity,
-        toLocality: customer.to_address.toLocality,
-        toState: customer.to_address.toState,
-        lastName: customer.to_address.lastName,
-        pincode: customer.to_address.pincode,
-      }));
-      console.log("to Address:", toAddressDetails);
-
-      const customItemDetails = data.Customer_Estimate_Flow.map((customer) => ({
-        ItemDetailsArray: customer.items.customItems.items.map((item) => ({
-          id: item.id,
-          itemDescription: item.item_description,
-          itemHeight: item.item_height,
-          itemLength: item.item_length,
-          itemName: item.item_name,
-          itemQty: item.item_qty,
-          itemWidth: item.item_width,
-        })),
-        units: customer.items.customItems.units,
-      }));
-      console.log("Item Details:", customItemDetails);
-
+      setLogisticData(updatedGeneralData)
+      console.log(logisticData)
       const inventoryDetails = data.Customer_Estimate_Flow.map((customer) => ({
         inventoryDetailsArray: customer.items.inventory.map((invent) => ({
           category: invent.category,
@@ -101,6 +67,7 @@ const MyMoves = () => {
         })),
       }));
       setInventoryData(inventoryDetails);
+
       if (inventoryData && inventoryData.length > 0){
         const flatInventory = inventoryData.flatMap((inventory) => inventory.inventoryDetailsArray)
 
@@ -109,48 +76,153 @@ const MyMoves = () => {
             furnitureDetailsArray: furniture.category.map((item) => ({
                 FurnitureDisplayName: item.displayName,
                 items: item.items.map((types) => ({
-                    sofaTypeDisplayName: types.displayName
+                    sofaTypeDisplayName: types.displayName,
+                    furnitureId:types.id,
+                    order: types.order,
+                    uniqueId: types.uniquieId,
+                    material: types.type && types.type.length > 0
+                  ? types.type  
+                  .filter((indivtype) => indivtype.selected)
+                  .map((selectedType) => ({
+                    option: selectedType.option
+                  }))[0] || null
+                  : null
                 }))
             }))
         }))
-        // furniture selected:true condition then the furniture is displayed
-        // have to seperate the items into individual components so that you can understand clearly
-        // or it will get messy
-        // card component should be added in here then there details should be seen and later 
-        // more details should be placed in other components and use bootstrap accordian 'https://react-bootstrap.netlify.app/docs/components/accordion'
+        setFurnitureList(furnitureDetails)
+       
         const electronicsItems = flatInventory.filter((item) => item.displayName === 'Electronics')
+        const electronicsDetails = electronicsItems.map((elect) => ({
+          electronicsDetailsArray: elect.category.map((item) => ({
+              electronicsDisplayName: item.displayName,
+              items: item.items.map((types) => ({
+                  electronicTypeDisplayName: types.displayName,
+                  electronicId: types.id,
+                  order: types.order,
+                  uniqueId: types.uniquieId,
+                  typeOfElectronics: types.type && types.type.length > 0
+                  ? types.type  
+                  .filter((indivType) => indivType.selected)
+                  .map((selectedType) => ({
+                    option: selectedType.option,
+                  }))[0] || null
+                  : null
+              }))
+          }))
+        }))
+        setElectronicsList(electronicsDetails)
+
         const vehicleItems = flatInventory.filter((item) => item.displayName === 'Vehicle')
+        const vehiclesDetails = vehicleItems.map((vehicle) => ({
+          vehicleDetailsArray: vehicle.category.map((item) => ({
+              vehicleDisplayName: item.displayName,
+              items: item.items.map((types) => ({
+                  vehicleTypeDisplayName: types.displayName,
+                  vehicleId: types.id,
+                  order: types.order,
+                  uniqueId: types.uniquieId,
+                  typeOfvehicle: types.type && types.type.length > 0
+                  ? types.type 
+                  .filter((indivType) => indivType.selected)
+                  .map((selectedType) => ({
+                    option: selectedType.option,
+                  }))[0] || null
+                  : null
+              }))
+          }))
+        }))
+        setVehicleList(vehiclesDetails)
+
         const boxesItems = flatInventory.filter((item) => item.displayName === 'Boxes/Trolley')
+        const boxesDetails = boxesItems.map((box) => ({
+          boxDetailsArray: box.category.map((item) => ({
+              boxesDisplayName: item.displayName,
+              items: item.items.map((types) => ({
+                  boxTypeDisplayName: types.displayName,
+                  boxId: types.id,
+                  order: types.order,
+                  uniqueId: types.uniquieId,
+                  sizeOfBox: types.size && types.size.length > 0
+                  ? types.size 
+                  .filter((indivboxSize) => indivboxSize.selected)
+                  .map((selectedSize) => ({
+                    option: selectedSize.option,
+                    tooltip: selectedSize.tooltip
+                  }))[0] || null
+                  : null
+              }))
+          }))
+        }))
+        setBoxesList(boxesDetails)
+
         const otherItems = flatInventory.filter((item) => item.displayName === 'Other appliances')
-        console.log("furniture Items: ", furnitureItems)
-        console.log("electronics Items: ", electronicsItems)
-        console.log("vehicle Items: ",vehicleItems)
-        console.log("boxes/trolley Items: ",boxesItems)
-        console.log("Other Appliances: ",otherItems)
+        const otherDetails = otherItems.map((other) => ({
+          otherDetailsArray: other.category.map((item) => ({
+              othersDisplayName: item.displayName,
+              items: item.items.map((types) => ({
+                  otherTypeDisplayName: types.displayName,
+                  otherId: types.id,
+                  order: types.order,
+                  uniqueId: types.uniquieId,
+              }))
+          }))
+        }))
+        setOthersList(otherDetails)
     }
+    }else {
+      setApiStatus(apiStatusConstants.failure)
     }
   };
 
   useEffect(() => {
     getMovesData()
   }, []);
-
-  const renderSuccessView = () => (
+  
+  const renderLoadingView = () => (
     <div>
-        Success View 
-
+      <Spinner animation="border" variant="danger" />
     </div>
   )
-  return (
+  const renderSuccessView = () => (
     <div className="my-move-main-container">
-      <h1>My Moves</h1>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, quo
-        assumenda, ad tempore nesciunt, odio expedita odit perspiciatis vitae
-        voluptate eum dicta quasi magnam perferendis repudiandae eligendi quos
-        sed enim.
-      </p>
+       <h1 className="heading">My Moves</h1>
+       <ul className="unordered-list">
+        {logisticData.length > 0 ? (
+          logisticData.map((data) => (
+            <MovesCard logisticData={data} />
+          ))
+
+        ): (
+          <div>No logistics found</div>
+        )}
+          
+       </ul>
     </div>
+  )
+
+  const renderFailureView = () => (
+    <div>
+      Failure
+    </div>
+  )
+
+  const renderFinalView = () => {
+    switch(apiStatus) {
+      case apiStatusConstants.inProgress:
+        return renderLoadingView()
+      case apiStatusConstants.success:
+        return renderSuccessView()
+      case apiStatusConstants.failure:
+        return renderFailureView()
+      default:
+        return null    
+    }
+  } 
+  return (
+    <>
+      {renderFinalView()}
+    </>
   );
 };
 

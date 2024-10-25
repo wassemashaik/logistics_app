@@ -10,7 +10,7 @@ function App() {
       minBreakpoint="xxs"
     >
       <div>
-        <NavBar/>
+        <NavBar />
         <MyMoves/>
       </div>
     </ThemeProvider>

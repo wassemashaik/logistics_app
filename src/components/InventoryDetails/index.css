@@ -1,0 +1,23 @@
+.accordian-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.accordian-main-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.accordion-header-custom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #dee2e6;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+}
