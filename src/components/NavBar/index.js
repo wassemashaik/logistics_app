@@ -7,6 +7,7 @@ import "./index.css";
 import { useState } from "react";
 
 const NavBar = () => {
+  // eslint-disable-next-line
   const [isActive, setIsActive] = useState(false);
 
   const clickRoute = () => {

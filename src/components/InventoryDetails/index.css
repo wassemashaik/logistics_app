@@ -25,6 +25,7 @@ ul {
 }
 .para-text {
   margin: 0px 10px;
+  font-size: 10px;
 }
 .unordered-accord-items {
   display: flex;
