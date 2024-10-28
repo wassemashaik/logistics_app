@@ -1,22 +1,16 @@
 import "./index.css";
-import InventoryDetails from '../InventoryDetails';
+import InventoryDetails from "../InventoryDetails";
 
 const ViewMoveDetailsPage = (props) => {
   const { logisticData } = props;
   const {
     newElevatorAvailability,
     newFloorNo,
-    newHouseAdditionalInfo,
     newParkingDistance,
     oldElevatorAvailability,
     oldFloorNo,
-    oldHouseAdditionalInfo,
-    orderDate,
     oldParkingDistance,
-    userId,
-    moveDateFlexible,
   } = logisticData;
-  console.log("details page: ", logisticData);
   return (
     <>
       <div className="additional-house-info-container">
@@ -65,8 +59,7 @@ const ViewMoveDetailsPage = (props) => {
         <h4 className="address-heading">Inventory Details</h4>
         <button className="info-btn">Edit Inventory</button>
       </div>
-      <InventoryDetails/>
-      
+      <InventoryDetails logisticData={logisticData} />
     </>
   );
 };

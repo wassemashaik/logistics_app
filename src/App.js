@@ -11,7 +11,7 @@ function App() {
     >
       <div>
         <NavBar />
-        <MyMoves/>
+        <MyMoves />
       </div>
     </ThemeProvider>
   );

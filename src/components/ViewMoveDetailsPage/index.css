@@ -1,23 +1,23 @@
-.additional-house-info-container{
-    display: flex;
-    justify-content: space-between;
+.additional-house-info-container {
+  display: flex;
+  justify-content: space-between;
 }
 .house-details {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-.house-details-head{
-    color: red;
-    font-weight: 600;
-    font-size: 12px;
+.house-details-head {
+  color: red;
+  font-weight: 600;
+  font-size: 12px;
 }
-.house-floor-container{
-    display: flex;
-    justify-content: space-between;
+.house-floor-container {
+  display: flex;
+  justify-content: space-between;
 }
 .house-floor-details {
-    display: flex;
-    flex-direction: column;
-    margin: 10px;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
 }
